@@ -18,3 +18,13 @@ export const getTrendingMovie = async (page = 1) => {
   const res = transformMoviesData(data.results);
   return res;
 };
+
+export const getInfoMovieByID = async movieID => {
+  const { data } = await axios.get(`movie/${movieID}`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  const res = transformMoviesData(data);
+  return res;
+};
