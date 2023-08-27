@@ -1,34 +1,68 @@
+import { Container, Heading, Section } from 'components/Home/Home.styled';
+import { Loader } from 'components/Loader/Loader';
+import {
+  Card,
+  CardBody,
+  RowG,
+  ColMd4,
+  ColMd8,
+  Img,
+} from 'components/MovieDetails/MovieDetails.styled';
 import { useFetchMovieInfo } from 'hooks/useFetchMovieInfo';
-import { useParams } from 'react-router-dom';
+import { Suspense } from 'react';
+import { Link, Outlet, useParams } from 'react-router-dom';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
-  const test = useFetchMovieInfo(movieId);
+  const {
+    movieInfo: { id, title, genres, poster, overview, score },
+    error,
+    loading,
+  } = useFetchMovieInfo(movieId);
 
-  console.log(test);
   return (
-    <div className="card mb-3">
-      <div className="row g-0">
-        <div className="col-md-4">
-          <img src="..." className="img-fluid rounded-start" alt="..." />
-        </div>
-        <div className="col-md-8">
-          <div className="card-body">
-            <h5 className="card-title">Card title</h5>
-            <p className="card-text">
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-            <p className="card-text">
-              <small className="text-body-secondary">
-                Last updated 3 mins ago
-              </small>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Section>
+      <Container>
+        {error && <Heading>{error}</Heading>}
+        {loading && <Loader />}
+        {id && (
+          <>
+            <Card>
+              <RowG>
+                <ColMd4>
+                  <Img
+                    src={poster}
+                    className="img-fluid rounded-start"
+                    alt={title}
+                  />
+                </ColMd4>
+                <ColMd8>
+                  <CardBody>
+                    <h2>{title}</h2>
+                    <p>User score: {score}%</p>
+                    <h3>Overview</h3>
+                    <p>{overview}</p>
+                    <h3>Genres</h3>
+                    <p>{genres}</p>
+                  </CardBody>
+                </ColMd8>
+              </RowG>
+            </Card>
+            <ul>
+              <li>
+                <Link to="Cast">Cast</Link>
+              </li>
+              <li>
+                <Link to="Reviews">Reviews</Link>
+              </li>
+            </ul>
+            <Suspense fallback={<div>Loading subpage...</div>}>
+              <Outlet />
+            </Suspense>
+          </>
+        )}
+      </Container>
+    </Section>
   );
 };
 
