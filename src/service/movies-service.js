@@ -55,3 +55,15 @@ export const getReviewsByID = async movieID => {
   const res = transformMoviesReviews(data.results);
   return res;
 };
+
+export const getMovieByQuery = async query => {
+  const { data } = await axios.get(`search/movie`, {
+    params: {
+      api_key: API_KEY,
+      query,
+    },
+  });
+
+  const res = transformMoviesData(data.results);
+  return res;
+};

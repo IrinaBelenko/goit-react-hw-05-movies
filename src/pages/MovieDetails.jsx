@@ -1,3 +1,4 @@
+import { Grid } from 'components/Cast/Cast.styled';
 import { Container, Heading, Section } from 'components/Home/Home.styled';
 import { Loader } from 'components/Loader/Loader';
 import {
@@ -8,9 +9,10 @@ import {
   ColMd8,
   Img,
 } from 'components/MovieDetails/MovieDetails.styled';
+import { NavLinkStyled } from 'components/SharedLayout/SharedLayout.styled';
 import { useFetchMovieInfo } from 'hooks/useFetchMovieInfo';
 import { Suspense } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -48,14 +50,14 @@ const MovieDetails = () => {
                 </ColMd8>
               </RowG>
             </Card>
-            <ul>
+            <Grid>
               <li>
-                <Link to="Cast">Cast</Link>
+                <NavLinkStyled to="Cast">Cast</NavLinkStyled>
               </li>
               <li>
-                <Link to="Reviews">Reviews</Link>
+                <NavLinkStyled to="Reviews">Reviews</NavLinkStyled>
               </li>
-            </ul>
+            </Grid>
             <Suspense fallback={<div>Loading subpage...</div>}>
               <Outlet />
             </Suspense>
