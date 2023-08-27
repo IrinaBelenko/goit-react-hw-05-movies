@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 export const Reviews = () => {
   const { movieId } = useParams();
   const { movieReviews, error, loading } = useFetchMovieReviews(movieId);
-  console.log(movieReviews, error, loading);
+
   return (
     <Section>
       <Container>
@@ -19,7 +19,7 @@ export const Reviews = () => {
             {movieReviews.map(({ author, content }, index) => (
               <GridItem key={index + 1}>
                 <h2>{author}</h2>
-                <p>{content}%</p>
+                <p>{content}</p>
               </GridItem>
             ))}
           </Grid>
