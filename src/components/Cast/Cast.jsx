@@ -8,7 +8,7 @@ import { Img } from 'components/MovieDetails/MovieDetails.styled';
 export const Cast = () => {
   const { movieId } = useParams();
   const { movieCast, error, loading } = useFetchMovieCast(movieId);
-  console.log(movieCast, error, loading);
+
   return (
     <Section>
       <Container>
