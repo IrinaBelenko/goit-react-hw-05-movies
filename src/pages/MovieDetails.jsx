@@ -1,3 +1,4 @@
+import { BackLink } from 'components/BackLink/BackLink';
 import { Grid } from 'components/Cast/Cast.styled';
 import { Container, Heading, Section } from 'components/Home/Home.styled';
 import { Loader } from 'components/Loader/Loader';
@@ -12,7 +13,7 @@ import {
 import { NavLinkStyled } from 'components/SharedLayout/SharedLayout.styled';
 import { useFetchMovieInfo } from 'hooks/useFetchMovieInfo';
 import { Suspense } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -21,6 +22,8 @@ const MovieDetails = () => {
     error,
     loading,
   } = useFetchMovieInfo(movieId);
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/movies';
 
   return (
     <Section>
@@ -29,6 +32,7 @@ const MovieDetails = () => {
         {loading && <Loader />}
         {id && (
           <>
+            <BackLink to={backLinkHref}>Back</BackLink>
             <Card>
               <RowG>
                 <ColMd4>
